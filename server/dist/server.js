@@ -1,4 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-console.log('working ts');
-//# sourceMappingURL=server.js.map
+import express from "express";
+const app = express();
+app.get("/", (req, res) => {
+    res.send("Hello, TypeScript + Express!");
+});
+app.listen(3000, () => console.log("Server running on port 3000"));
