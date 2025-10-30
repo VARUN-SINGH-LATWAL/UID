@@ -1,7 +1,12 @@
 import express, { Request, Response } from "express";
 import Table from './Routers/Table.js'
+import {Tables, checkConnection} from './Database/db.js'
 
 const app = express();
+
+checkConnection()
+
+// start api 
 
 app.use('/',Table)
 
