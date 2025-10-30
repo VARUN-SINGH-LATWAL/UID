@@ -8,7 +8,7 @@ checkConnection()
 
 // start api 
 
-app.use('/',Table)
+app.use('/api',Table)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, TypeScript + Express!");

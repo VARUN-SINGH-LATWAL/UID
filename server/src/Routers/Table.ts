@@ -1,9 +1,7 @@
-import express,{ Request, Response } from "express";
+import express from "express";
 const router = express.Router()
+import {getOrangeTable} from '../Controllers/Table.js'
 
-router.get('/home',(req: Request,res: Response)=>{
-    console.log("Home Page?");
-  res.send("Welcome to the Home Page!");
-})
+router.get('/getOrangeTable',getOrangeTable)
 
 export default router;

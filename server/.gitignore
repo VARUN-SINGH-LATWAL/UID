@@ -1,1 +1,7 @@
 node_modules
+
+# Ignore Access database files
+*.mdb
+*.ldb
+*.accdb
+
