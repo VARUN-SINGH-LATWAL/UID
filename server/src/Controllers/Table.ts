@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-function getOrangeTable(req: Request, res: Response) {
+function getPieces(req: Request, res: Response) {
   res.send("working");
 }
 
-export { getOrangeTable };
+export { getPieces };

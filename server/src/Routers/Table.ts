@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router()
-import {getOrangeTable} from '../Controllers/Table.js'
+import {getPieces} from '../Controllers/Table.js'
 
-router.get('/getOrangeTable',getOrangeTable)
+router.get('/getPieces',getPieces)
 
 export default router;
