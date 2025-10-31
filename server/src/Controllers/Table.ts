@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
 import { Tables } from "../Database/db.js";
 
-interface Piece {
-  NumOrd: number;
-  CodPie: string;
-  ProPie: string;
-  PlaPie: string;
-  PieFin: string;
-  PreAce: string;
-  GRADE: string;
-  QTY: number;
-  OD: string;
-  LENGTH: string;
-  ID: string;
-  ELEMENT: string;
-  ORDERDATE: string;
-}
 async function getPieces(req: Request, res: Response) {
+  interface Piece {
+    NumOrd: number;
+    CodPie: string;
+    ProPie: string;
+    PlaPie: string;
+    PieFin: string;
+    PreAce: string;
+    GRADE: string;
+    QTY: number;
+    OD: string;
+    LENGTH: string;
+    ID: string;
+    ELEMENT: string;
+    ORDERDATE: string;
+  }
 
   try {
     const { id } = req.params;

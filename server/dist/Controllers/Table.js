@@ -9,6 +9,7 @@ async function getPieces(req, res) {
                 message: "Invalid or missing 'id' parameter.",
             });
         }
+        console.log(id);
         // Construct query safely
         const query = `
       SELECT 
