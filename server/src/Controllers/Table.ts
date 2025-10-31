@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
 import { Tables } from "../Database/db.js";
 
-async function getPieces(req: Request, res: Response) {
-
-    interface Piece {
+interface Piece {
   NumOrd: number;
   CodPie: string;
   ProPie: string;
@@ -18,8 +16,7 @@ async function getPieces(req: Request, res: Response) {
   ELEMENT: string;
   ORDERDATE: string;
 }
-
-
+async function getPieces(req: Request, res: Response) {
 
   try {
     const { id } = req.params;
@@ -31,6 +28,8 @@ async function getPieces(req: Request, res: Response) {
         message: "Invalid or missing 'id' parameter.",
       });
     }
+
+    console.log(id)
 
     // Construct query safely
     const query = `
@@ -55,7 +54,7 @@ async function getPieces(req: Request, res: Response) {
       WHERE [ordenes de fabricación (piezas)].NumOrd = ${Number(id)};
     `;
 
-    const result : Piece[] = await Tables.query(query);
+    const result: Piece[] = await Tables.query(query);
 
     if (!result || result.length === 0) {
       return res.status(404).json({

@@ -1,6 +1,8 @@
 import express from "express";
+import Table from './Routers/Table.js';
+import { checkConnection } from './Database/db.js';
 const app = express();
-app.get("/", (req, res) => {
-    res.send("Hello, TypeScript + Express!");
-});
+checkConnection();
+// start api 
+app.use('/api', Table);
 app.listen(3000, () => console.log("Server running on port 3000"));
