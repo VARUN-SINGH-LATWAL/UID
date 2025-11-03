@@ -1,16 +1,7 @@
 import { Request, Response } from "express";
 import { Tables } from "../Database/db.js";
+import {Piece} from '../interfaces/TableInterfaces.js'
 
-interface Piece {
-  UID: number;
-  GRADE: string;
-  QTY: number;
-  OD: number;
-  LENGTH: number;
-  ID: number;
-  ELEMENT: string;
-  ORDERDATE: string;
-}
 
 interface Piece2 {
   UID: number;
