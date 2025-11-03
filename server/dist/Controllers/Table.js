@@ -12,26 +12,8 @@ async function getPieces(req, res) {
         console.log(id);
         // Construct query safely
         const query = `
-      SELECT 
-        [ordenes de fabricación (piezas)].NumOrd,
-        [ordenes de fabricación (piezas)].CodPie,
-        [ordenes de fabricación (piezas)].ProPie,
-        [ordenes de fabricación (piezas)].PlaPie,
-        [ordenes de fabricación (piezas)].PieFin,
-        [ordenes de fabricación (piezas)].PreAce,
-        [ordenes de fabricación (piezas)].GRADE,
-        [ordenes de fabricación (piezas)].QTY,
-        [ordenes de fabricación (piezas)].OD,
-        [ordenes de fabricación (piezas)].LENGTH,
-        [ordenes de fabricación (piezas)].ID,
-        [ordenes de fabricación (piezas)].ELEMENT,
-        [ordenes de fabricación (piezas)].ORDERDATE,
-        CarbideOrderHistory.UID AS HistoryUID
-      FROM [ordenes de fabricación (piezas)]
-      LEFT JOIN CarbideOrderHistory 
-        ON [ordenes de fabricación (piezas)].NumOrd = CarbideOrderHistory.UID
-      WHERE [ordenes de fabricación (piezas)].NumOrd = ${Number(id)};
-    `;
+     SELECT UID,GRADE,QTY,OD,LENGTH,ID,ELEMENT,ORDERDATE
+     FROM CarbideOrderHistory  where UID=${id}`;
         const result = await Tables.query(query);
         if (!result || result.length === 0) {
             return res.status(404).json({
@@ -57,4 +39,41 @@ async function getPieces(req, res) {
         });
     }
 }
-export { getPieces };
+async function getPieces2(req, res) {
+    try {
+        const { id } = req.params;
+        // Validate input
+        if (!id || isNaN(Number(id))) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid or missing 'id' parameter.",
+            });
+        }
+        const query = `SELECT CodPie, NomPie, MatPie, CalPie, DurPie, DiaExt, Longit, DiaInt, ModPie 
+              FROM [artículos de clientes (piezas)] WHERE CodArt = '${id}'`;
+        const result = await Tables.query(query);
+        if (!result || result.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No data found for the given ID.",
+                data: [],
+            });
+        }
+        // Successful response
+        return res.status(200).json({
+            success: true,
+            message: "Data retrieved successfully.",
+            count: result.length,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.error("Error fetching pieces:", error);
+        return res.status(500).json({
+            success: false,
+            message: "An internal server error occurred.",
+            error: error.message || error,
+        });
+    }
+}
+export { getPieces, getPieces2 };
