@@ -1,23 +1,17 @@
 import { Request, Response } from "express";
 import { Tables } from "../Database/db.js";
 
+interface Piece {
+  UID: number;
+  GRADE: string;
+  QTY: number;
+  OD: number;
+  LENGTH: number;
+  ID: number;
+  ELEMENT: string;
+  ORDERDATE: string;
+}
 async function getPieces(req: Request, res: Response) {
-  interface Piece {
-    NumOrd: number;
-    CodPie: string;
-    ProPie: string;
-    PlaPie: string;
-    PieFin: string;
-    PreAce: string;
-    GRADE: string;
-    QTY: number;
-    OD: string;
-    LENGTH: string;
-    ID: string;
-    ELEMENT: string;
-    ORDERDATE: string;
-  }
-
   try {
     const { id } = req.params;
 
@@ -29,31 +23,12 @@ async function getPieces(req: Request, res: Response) {
       });
     }
 
-    console.log(id)
+    console.log(id);
 
     // Construct query safely
     const query = `
-      SELECT 
-        [ordenes de fabricación (piezas)].NumOrd,
-        [ordenes de fabricación (piezas)].CodPie,
-        [ordenes de fabricación (piezas)].ProPie,
-        [ordenes de fabricación (piezas)].PlaPie,
-        [ordenes de fabricación (piezas)].PieFin,
-        [ordenes de fabricación (piezas)].PreAce,
-        [ordenes de fabricación (piezas)].GRADE,
-        [ordenes de fabricación (piezas)].QTY,
-        [ordenes de fabricación (piezas)].OD,
-        [ordenes de fabricación (piezas)].LENGTH,
-        [ordenes de fabricación (piezas)].ID,
-        [ordenes de fabricación (piezas)].ELEMENT,
-        [ordenes de fabricación (piezas)].ORDERDATE,
-        CarbideOrderHistory.UID AS HistoryUID
-      FROM [ordenes de fabricación (piezas)]
-      LEFT JOIN CarbideOrderHistory 
-        ON [ordenes de fabricación (piezas)].NumOrd = CarbideOrderHistory.UID
-      WHERE [ordenes de fabricación (piezas)].NumOrd = ${Number(id)};
-    `;
-
+     SELECT UID,GRADE,QTY,OD,LENGTH,ID,ELEMENT,ORDERDATE
+     FROM CarbideOrderHistory  where UID=${id}`;
     const result: Piece[] = await Tables.query(query);
 
     if (!result || result.length === 0) {
