@@ -11,6 +11,17 @@ interface Piece {
   ELEMENT: string;
   ORDERDATE: string;
 }
+
+interface Piece2 {
+  UID: number;
+  GRADE: string;
+  QTY: number;
+  OD: number;
+  LENGTH: number;
+  ID: number;
+  ELEMENT: string;
+  ORDERDATE: string;
+}
 async function getPieces(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -57,4 +68,49 @@ async function getPieces(req: Request, res: Response) {
   }
 }
 
-export { getPieces };
+
+
+async function getPieces2(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+
+    // Validate input
+    if (!id || isNaN(Number(id))) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or missing 'id' parameter.",
+      });
+    }
+
+    const query = `SELECT CodPie, NomPie, MatPie, CalPie, DurPie, DiaExt, Longit, DiaInt, ModPie 
+              FROM [artículos de clientes (piezas)] WHERE CodArt = '${id}'`;
+    const result: Piece[] = await Tables.query(query);
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No data found for the given ID.",
+        data: [],
+      });
+    }
+
+    // Successful response
+    return res.status(200).json({
+      success: true,
+      message: "Data retrieved successfully.",
+      count: result.length,
+      data: result,
+    });
+  } catch (error: any) {
+    console.error("Error fetching pieces:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "An internal server error occurred.",
+      error: error.message || error,
+    });
+  }
+}
+
+
+export { getPieces, getPieces2 };
